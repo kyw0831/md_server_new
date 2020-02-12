@@ -1,4 +1,4 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -39,8 +39,8 @@
     <header class="main-header">
 
         <!-- Logo -->
-        <!--<a href="http://52.15.239.161:5000/main" class="logo">-->
         <a href="http://52.14.78.174:5000/main" class="logo">
+        <!--<a href="http://localhost:5000/main" class="logo">-->
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>M</b>D</span>
             <!-- logo for regular state and mobile devices -->
@@ -172,8 +172,8 @@
 
                                 </div>
                                 <div class="pull-right">
-                                    <!--<a href="http://52.15.239.161:5000/" class="btn btn-default btn-flat">Sign out</a>-->
                                     <a href="http://52.14.78.174:5000/" class="btn btn-default btn-flat">Sign out</a>
+                                    <!--<a href="http://localhost:5000/" class="btn btn-default btn-flat">Sign out</a>-->
                                 </div>
                             </li>
                         </ul>
@@ -246,7 +246,17 @@
             <h1>
                 Mechanic Doctor
                 <small>Mechanic Doctor</small>
+                <small id="time-result"></small>
             </h1>
+
+  <script type="text/javascript">
+        var d = new Date();
+        var currentDate = d.getFullYear() + "-"+ ( d.getMonth() + 1 ) + "-" + d.getDate();
+        var currentTime = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+        var result = document.getElementById("time-result");
+        result.innerHTML = currentDate +" "+currentTime + " Usage";
+    </script>
+
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
                 <li class="active">Here</li>
@@ -256,18 +266,19 @@
         <!-- Main content -->
         <section class="content">
             <div class="col-md-6">
-             <!-- LINE CHART -->
-          <div class="box box-info">
-            <div class="box-header with-border">
-               <i class="fa fa-bar-chart-o"></i><h3 class="box-title">User total</h3>
-            </div>
+                <!-- LINE CHART -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">User total</h3>
+                    </div>
 
-            <div class="box-body chart-responsive">
-              <div class="chart" id="line-chart" style="height: 300px;"></div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="line-chart" style="height: 300px;"></div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
 
                 <!-- Bar chart -->
                 <div class="box box-primary">
@@ -292,11 +303,11 @@
                     </div>
                     <div class="box-body">
                         <div id="donut-chart" style="height: 300px;"></div>
-                        <p><i class="fa fa-square" style="color:#56a0f0"></i> bad ball joint</p>
-                        <p><i class="fa fa-square" style="color:#0073b7"></i> bad brake pad</p>
-                        <p><i class="fa fa-square" style="color:#56c4f0"></i> engine running without oil+engine seizing up</p>
-                        <p><i class="fa fa-square" style="color:#414c9a"></i> failing water pump</p>
-                        <p><i class="fa fa-square" style="color:#6756f0"></i> hole in muffler</p>
+                        <p><i class="fa fa-square" style="color:#56a0f0"></i> bad_ball_joint</p>
+                        <p><i class="fa fa-square" style="color:#0073b7"></i> bad_brake_pad</p>
+                        <p><i class="fa fa-square" style="color:#56c4f0"></i> engine_seizing_up</p>
+                        <p><i class="fa fa-square" style="color:#414c9a"></i> failing_water_pump</p>
+                        <p><i class="fa fa-square" style="color:#6756f0"></i> hole_in_muffler</p>
                         <p><i class="fa fa-square" style="color:#9f56f0"></i> normal</p>
                     </div>
                     <!-- /.box-body-->
@@ -433,23 +444,27 @@
 <script src="../static/js/raphael.min.js"></script>
 <script src="../static/js/morris.min.js"></script>
 <!--<script src="../static/js/usage.js"></script>-->
-
+<script src="../static/js/dateformatter.js"></script>
 <script>
  $(function () {
          "use strict";
-
     // LINE CHART
+    var today = new Date();
+    var day1 = new Date();
+
+    var dateCnt = {{dateCnt}};
+
     var line = new Morris.Line({
       element: 'line-chart',
       resize: true,
       data: [
-        {y: '2020-01-23', item1: 5},
-        {y: '2020-01-24', item1: 10},
-        {y: '2020-01-25', item1: 20},
-        {y: '2020-01-26', item1: 30},
-        {y: '2020-01-27', item1: 5},
-        {y: '2020-01-28', item1: 10},
-        {y: '2020-01-29', item1: 3}
+        {y: getFormatDateBefore(day1,0), item1: dateCnt[0]},
+        {y: getFormatDateBefore(day1,1), item1: dateCnt[1]},
+        {y: getFormatDateBefore(day1,2), item1: dateCnt[2]},
+        {y: getFormatDateBefore(day1,3), item1: dateCnt[3]},
+        {y: getFormatDateBefore(day1,4), item1: dateCnt[4]},
+        {y: getFormatDateBefore(day1,5), item1: dateCnt[5]},
+        {y: getFormatDateBefore(day1,6), item1: dateCnt[6]}
       ],
       xkey: 'y',
       ykeys: ['item1'],
@@ -463,15 +478,14 @@
      * ---------
      */
 
-    var receivedData = {{usage}};
-
+    var causeTotal = {{causeTotal}};
     var bar_data = {
-      data : [['bad ball joint', receivedData[0]],
-      ['bad brake pad', receivedData[1]],
-      ['engine running without oil+engine seizing up', receivedData[2]],
-      ['failing water pump', receivedData[3]],
-      ['hole in muffler', receivedData[4]],
-      ['normal', receivedData[5]]],
+      data : [['bad_ball_joint', causeTotal[0]],
+      ['bad_brake_pad', causeTotal[1]],
+      ['engine_seizing_up', causeTotal[2]],
+      ['failing_water_pump', causeTotal[3]],
+      ['hole_in_muffler', causeTotal[4]],
+      ['no_problem', causeTotal[5]]],
       color: '#3c8dbc'
     }
     $.plot('#bar-chart', [bar_data], {
@@ -499,12 +513,12 @@
      * -----------
      */
     var donutData = [
-      { label: '', data: receivedData[0], color: '#56a0f0' },
-      { label: '', data: receivedData[1], color: '#0073b7' },
-      { label: '', data: receivedData[2], color: '#56c4f0' },
-      { label: '', data: receivedData[3], color: '#414c9a' },
-      { label: '', data: receivedData[4], color: '#6756f0' },
-      { label: '', data: receivedData[5], color: '#9f56f0' }
+      { label: '', data: causeTotal[0], color: '#56a0f0' },
+      { label: '', data: causeTotal[1], color: '#0073b7' },
+      { label: '', data: causeTotal[2], color: '#56c4f0' },
+      { label: '', data: causeTotal[3], color: '#414c9a' },
+      { label: '', data: causeTotal[4], color: '#6756f0' },
+      { label: '', data: causeTotal[5], color: '#9f56f0' }
     ]
     $.plot('#donut-chart', donutData, {
       series: {
@@ -541,6 +555,7 @@
       + '<br>'
       + Math.round(series.percent) + '%</div>'
   }
+
 
 </script>
 </body>
