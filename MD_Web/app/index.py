@@ -82,8 +82,8 @@ def cut_wav_only3sec():
     if len(wav) > 4000:
         edit_wav = wav[1000:1000+time_slice*1000]
         edit_wav.export(wav_path + wav_name, format="wav",
-                parameters=["-ab", str(audio_bit_rate), 
-                    "-ac", str(audio_channels), 
+                parameters=["-ab", str(audio_bit_rate),
+                    "-ac", str(audio_channels),
                     "-ar", str(audio_sampling_rate)])
 
 
@@ -138,6 +138,19 @@ def upload_file():
       cut_wav_only3sec()
       wav_to_mel()
       print(predict())
+
+      items = predict()
+      for index, (key, elem) in enumerate(items.items()):
+          print(index, key, elem)
+      print("most : {}".format(list(items.keys())[0]))
+
+      #input result to database
+      curs = db.cursor(pymysql.cursors.DictCursor)
+      sql = """insert into application(state)
+               values (%s)"""
+      curs.execute(sql, (list(items.keys())[0]).encode('utf-8'))
+      db.commit()
+
       return str(predict())
 
 @app.route('/main', methods=['POST', 'GET'])
