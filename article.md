@@ -29,17 +29,17 @@ If you CentOS, it is little different.
 > curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh | sudo bash<br/>
 > sudo EXTERNAL_URL="http://gitlab.example.com" yum install -y gitlab-ee<br/>
 
-And depending on the OS and excution environment you use, It change every time.<br/>
+And depending on the OS and excution environment you use, It change every time.
 But if you use docker, No matter what OS you use you can make your own server by this commands.
-> $ docker run --detach \<br/>
->     --hostname gitlab.example.com \<br/>
->     --publish 443:443 --publish 80:80 --publish 22:22 \<br/>
->     --name gitlab \<br/>
->     --restart always \<br/>
->     --volume /srv/gitlab/config:/etc/gitlab \<br/>
->     --volume /srv/gitlab/logs:/var/log/gitlab \<br/>
->     --volume /srv/gitlab/data:/var/opt/gitlab \<br/>
->     gitlab/gitlab-ce:latest<br/>
+> $ docker run --detach \
+>     --hostname gitlab.example.com \
+>     --publish 443:443 --publish 80:80 --publish 22:22 \
+>     --name gitlab \
+>     --restart always \
+>     --volume /srv/gitlab/config:/etc/gitlab \
+>     --volume /srv/gitlab/logs:/var/log/gitlab \
+>     --volume /srv/gitlab/data:/var/opt/gitlab \
+>     gitlab/gitlab-ce:latest
 
 As you can see, It provides a large number of convenience and scalability
 
