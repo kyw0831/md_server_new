@@ -96,25 +96,25 @@ Similarly, you can easily create, run, and deploy any program you want, such as 
 Docker basic commands
 -------------
 The command to check the list of containers is:
-docker ps [OPTIONS]
+> docker ps [OPTIONS]
 
 The command to stop a running container is:
-docker stop [OPTIONS] CONTAINER [CONTAINER ...]
+> docker stop [OPTIONS] CONTAINER [CONTAINER ...]
 
 The command to completely remove a terminated container is:
-docker rm [OPTIONS] CONTAINER [CONTAINER ...]
+> docker rm [OPTIONS] CONTAINER [CONTAINER ...]
 
 The command to view the list of images downloaded by Docker is:
-docker images [OPTIONS] [REPOSITORY [: TAG]]
+> docker images [OPTIONS] [REPOSITORY [: TAG]]
 
 The command to download an image is:
-docker pull [OPTIONS] NAME [: TAG | @DIGEST]
+> docker pull [OPTIONS] NAME [: TAG | @DIGEST]
 
 Here's how to delete an image:
-docker rmi [OPTIONS] IMAGE [IMAGE ...]
+> docker rmi [OPTIONS] IMAGE [IMAGE ...]
 
 A good way to verify that the container is working is to check the logs. Here's how to check the log:
-docker logs [OPTIONS] CONTAINER
+> docker logs [OPTIONS] CONTAINER
 
 Here's how to run a container command:
-docker exec [OPTIONS] CONTAINER COMMAND [ARG ...]
+> docker exec [OPTIONS] CONTAINER COMMAND [ARG ...]
