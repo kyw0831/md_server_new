@@ -1,6 +1,6 @@
 All about Docker
 =============
-<img src="https://imgdb.in/gtN7" width="450px" height="300px" title="" alt="RubberDuck"></img><br/>
+<img src="https://imgdb.in/gtN7" />
 
 What is docker
 -------------
